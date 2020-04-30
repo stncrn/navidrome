@@ -22,6 +22,7 @@ export default deepmerge(frenchMessages, {
       },
       bulk: {
         addToQueue: 'Ajouter à la file',
+        shuffleAll: 'Tout mélanger',
       },
     },
     album: {

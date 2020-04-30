@@ -14,6 +14,7 @@ export default deepmerge(englishMessages, {
       },
       bulk: {
         addToQueue: 'Play Later',
+        shuffleAll: 'Shuffle All',
       },
     },
     album: {

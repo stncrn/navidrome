@@ -2,6 +2,8 @@ import 'react-jinke-music-player/assets/index.css'
 import subsonic from '../subsonic'
 
 const PLAYER_ADD_TRACK = 'PLAYER_ADD_TRACK'
+const PLAYER_ADD_TRACKS = 'PLAYER_ADD_TRACKS'
+const PLAYER_CLEAR_QUEUE = 'PLAYER_CLEAR_QUEUE'
 const PLAYER_SET_TRACK = 'PLAYER_SET_TRACK'
 const PLAYER_SYNC_QUEUE = 'PLAYER_SYNC_QUEUE'
 const PLAYER_SCROBBLE = 'PLAYER_SCROBBLE'
@@ -19,6 +21,15 @@ const mapToAudioLists = (item) => ({
 const addTrack = (data) => ({
   type: PLAYER_ADD_TRACK,
   data,
+})
+
+const addTracks = (data) => ({
+  type: PLAYER_ADD_TRACKS,
+  data,
+})
+
+const clearQueue = () => ({
+  type: PLAYER_CLEAR_QUEUE,
 })
 
 const setTrack = (data) => ({
@@ -125,6 +136,25 @@ const playQueueReducer = (
         playing: true,
         current: payload.id,
       }
+    case PLAYER_ADD_TRACKS:
+      queue = previousState.queue
+      data.forEach((track) => {
+        queue.push(mapToAudioLists(track))
+      })
+      return {
+        ...previousState,
+        queue,
+        clear: false,
+        playing: true,
+      }
+    case PLAYER_CLEAR_QUEUE:
+      queue = []
+      return {
+        ...previousState,
+        queue,
+        clear: true,
+        playing: false,
+      }
     default:
       return previousState
   }
@@ -132,6 +162,8 @@ const playQueueReducer = (
 
 export {
   addTrack,
+  addTracks,
+  clearQueue,
   setTrack,
   playAlbum,
   syncQueue,
